@@ -102,17 +102,21 @@ public class PeerExplorer {
 
     public void handleMessage(DiscoveryEvent event) {
         DiscoveryMessageType type = event.getMessage().getMessageType();
-        if (type == DiscoveryMessageType.PING)
+        if (type == DiscoveryMessageType.PING) {
             this.handlePingMessage(event.getAddressIp(), (PingPeerMessage) event.getMessage());
+        }
 
-        if (type == DiscoveryMessageType.PONG)
+        if (type == DiscoveryMessageType.PONG) {
             this.handlePong(event.getAddressIp(), (PongPeerMessage) event.getMessage());
+        }
 
-        if (type == DiscoveryMessageType.FIND_NODE)
+        if (type == DiscoveryMessageType.FIND_NODE) {
             this.handleFindNode((FindNodePeerMessage) event.getMessage());
+        }
 
-        if (type == DiscoveryMessageType.NEIGHBORS)
+        if (type == DiscoveryMessageType.NEIGHBORS) {
             this.handleNeighborsMessage((NeighborsPeerMessage) event.getMessage());
+        }
 
     }
 
@@ -131,8 +135,9 @@ public class PeerExplorer {
         if (request != null && request.validateMessageResponse(message)) {
             this.pendingPingRequests.remove(message.getMessageId());
             NodeChallenge challenge = this.challengeManager.removeChallenge(message.getMessageId());
-            if (challenge == null)
+            if (challenge == null) {
                 this.addConnection(message, ip, message.getPort());
+            }
         }
     }
 
