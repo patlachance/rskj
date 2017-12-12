@@ -21,7 +21,6 @@ package co.rsk.peg;
 import co.rsk.bitcoinj.core.*;
 import co.rsk.config.BridgeConstants;
 import co.rsk.config.RskSystemProperties;
-import co.rsk.crypto.Sha3Hash;
 import co.rsk.panic.PanicProcessor;
 import com.google.common.annotations.VisibleForTesting;
 import org.ethereum.core.CallTransaction;
@@ -295,8 +294,9 @@ public class Bridge extends PrecompiledContracts.PrecompiledContract {
         {
             BridgeParsedData bridgeParsedData = parseData(data);
 
-            if (bridgeParsedData == null)
+            if (bridgeParsedData == null) {
                 return null;
+            }
 
             this.bridgeSupport = setup();
 
