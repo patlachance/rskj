@@ -1487,7 +1487,7 @@ public class BridgeSupport {
         return btcBlockStore;
     }
 
-    private static Pair<BtcTransaction, List<UTXO>> createMigrationTransaction(Wallet originWallet, Address destinationAddress) {
+    private Pair<BtcTransaction, List<UTXO>> createMigrationTransaction(Wallet originWallet, Address destinationAddress) {
         Coin expectedMigrationValue = originWallet.getBalance();
         for(;;) {
             BtcTransaction migrationBtcTx = new BtcTransaction(originWallet.getParams());
@@ -1495,7 +1495,7 @@ public class BridgeSupport {
 
             SendRequest sr = SendRequest.forTx(migrationBtcTx);
             sr.changeAddress = destinationAddress;
-            sr.feePerKb = Coin.MILLICOIN;
+            sr.feePerKb = getFeePerKb();
             sr.missingSigsMode = Wallet.MissingSigsMode.USE_OP_ZERO;
             sr.recipientsPayFees = true;
             try {
