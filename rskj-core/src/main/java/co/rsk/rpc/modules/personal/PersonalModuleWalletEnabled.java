@@ -111,7 +111,7 @@ public class PersonalModuleWalletEnabled implements PersonalModule {
             byte[] address = this.wallet.addAccountWithPrivateKey(Hex.decode(key), passphrase);
             return s = TypeConverter.toJsonHex(address);
         } finally {
-            LOGGER.debug("personal_importRawKey(*****): {}", s);
+            LOGGER.debug("personal_importRawKey({}, {}): {}", obfuscateOutput(key), obfuscateOutput(passphrase), s);
         }
     }
 
@@ -121,7 +121,7 @@ public class PersonalModuleWalletEnabled implements PersonalModule {
         try {
             return s = sendTransaction(args, getAccount(args.from, passphrase));
         } finally {
-            LOGGER.debug("eth_sendTransaction(" + args + "): " + s);
+            LOGGER.debug("eth_sendTransaction({}, {}): {}", args, obfuscateOutput(passphrase), s);
         }
     }
 
@@ -195,5 +195,11 @@ public class PersonalModuleWalletEnabled implements PersonalModule {
         if (!x.startsWith("0x"))
             throw new Exception("Incorrect hex syntax");
         return Long.parseLong(x.substring(2), 16);
+    }
+
+    private static String obfuscateOutput(String sensitiveInformation) {
+        char[] hiddenInformation = new char[sensitiveInformation.length()];
+        Arrays.fill(hiddenInformation, '*');
+        return new String(hiddenInformation);
     }
 }
