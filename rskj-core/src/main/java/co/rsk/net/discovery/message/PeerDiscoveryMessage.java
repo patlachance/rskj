@@ -87,10 +87,13 @@ public abstract class PeerDiscoveryMessage {
         byte[] s = new byte[32];
         byte v = signature[64];
 
-        if (v == 1)
+        if (v == 1) {
             v = 28;
-        if (v == 0)
+        }
+
+        if (v == 0) {
             v = 27;
+        }
 
         System.arraycopy(signature, 0, r, 0, 32);
         System.arraycopy(signature, 32, s, 0, 32);
