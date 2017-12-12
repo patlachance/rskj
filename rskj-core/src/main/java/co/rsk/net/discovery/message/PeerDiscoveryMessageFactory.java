@@ -28,14 +28,17 @@ public class PeerDiscoveryMessageFactory {
     public static PeerDiscoveryMessage createMessage(byte[] wire, byte[] mdc, byte[] signature, byte[] type, byte[] data) {
         DiscoveryMessageType msgType = DiscoveryMessageType.valueOfType(type[0]);
 
-        if (msgType == DiscoveryMessageType.PING)
+        if (msgType == DiscoveryMessageType.PING) {
             return new PingPeerMessage(wire, mdc, signature, type, data);
+        }
 
-        if (msgType == DiscoveryMessageType.PONG)
+        if (msgType == DiscoveryMessageType.PONG) {
             return new PongPeerMessage(wire, mdc, signature, type, data);
+        }
 
-        if (msgType == DiscoveryMessageType.FIND_NODE)
+        if (msgType == DiscoveryMessageType.FIND_NODE) {
             return new FindNodePeerMessage(wire, mdc, signature, type, data);
+        }
 
         return new NeighborsPeerMessage(wire, mdc, signature, type, data);
     }
