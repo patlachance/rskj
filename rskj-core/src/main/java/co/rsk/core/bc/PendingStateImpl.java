@@ -465,7 +465,7 @@ public class PendingStateImpl implements PendingState {
         if (bestBlock == null) {
             return true;
         }
-        
+
         return validator.isValid(tx, bestBlock.getGasLimitAsInteger());
     }
 
